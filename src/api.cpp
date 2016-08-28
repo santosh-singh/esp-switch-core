@@ -12,10 +12,11 @@ bool API::fetchToken(){
   #else
   String url = "/1.0/oauth/token";
   #endif
-  String post = "grant_type=password&client_id=HomeBeeDeviceApp&client_secret=HomeBee Workers&username=homebeedevice&password=H0m3b33D3v1c3";
+  String post = "grant_type=password&client_id=HomeBeeDevice&client_secret=HomeBee Device Workers&username=homebeedevice&password=H0m3b33D3v1c3";
   HTTPClient http;
-  String httpURL = String("https://") + host + String(":") + httpsPort + url;
-  http.begin(httpURL, fingerprint);
+  // String httpURL = String("https://") + host + String(":") + httpsPort + url;
+
+  http.begin(host, httpsPort, url, fingerprint);
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
   int httpCode = http.POST(post);
   String response;
@@ -33,7 +34,7 @@ bool API::fetchToken(){
           ESP_DEBUG("[esp-switch-core::fetchToken] ");
           json.prettyPrintTo(Serial);
           ESP_DEBUG("\n");
-          strcpy(accessToken, json["refresh_token"]);
+          strcpy(accessToken, json["access_token"]);
           strcpy(refreshToken, json["refresh_token"]);
           String tokens = "access_token: "+String(accessToken)+" refresh_token: "+String(refreshToken);
           ESP_DEBUG("[esp-switch-core::fetchToken] %s\n", tokens.c_str());
@@ -67,6 +68,7 @@ bool API::registerDevice(void){
   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
   http.addHeader("Authorization", "Bearer "+String(api.accessToken));
   int httpCode = http.POST(post);
+  ESP_DEBUG("[esp-switch-core::register] httpCode: %d\n", httpCode);
   String response;
   if(httpCode > 0) {
       ESP_DEBUG("[esp-switch-core::register] httpCode: %d\n", httpCode);

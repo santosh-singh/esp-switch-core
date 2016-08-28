@@ -1,8 +1,7 @@
 #define ESP_SWITCH_01
 #define ESP_API_DEBUG
-// #define DEBUG_ESP_HTTP_CLIENT
-// #define DEBUG_ESP_PORT Serial
-// #define DEBUGV(...) Serial.printf( __VA_ARGS__ )
+#define DEBUG_ESP_PORT Serial
+#define DEBUG_ESP_CORE
 #include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
 #include <DNSServer.h>
 #include <ESP8266WebServer.h>
