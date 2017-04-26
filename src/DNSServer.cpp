@@ -2,8 +2,9 @@
 #include <lwip/def.h>
 #include <Arduino.h>
 
-#define DEBUG
-#define DEBUG_OUTPUT Serial
+// #define DEBUG
+// #define DEBUG_OUTPUT Serial
+
 
 DNSServer::DNSServer()
 {
@@ -113,8 +114,8 @@ void DNSServer::replyWithIP()
 {
   _dnsHeader->QR = DNS_QR_RESPONSE;
   _dnsHeader->ANCount = _dnsHeader->QDCount;
-  _dnsHeader->QDCount = _dnsHeader->QDCount; 
-  //_dnsHeader->RA = 1;  
+  _dnsHeader->QDCount = _dnsHeader->QDCount;
+  //_dnsHeader->RA = 1;
 
   _udp.beginPacket(_udp.remoteIP(), _udp.remotePort());
   _udp.write(_buffer, _currentPacketSize);
@@ -127,7 +128,7 @@ void DNSServer::replyWithIP()
 
   _udp.write((uint8_t)0);   //0x0001 answer is class IN (internet address)
   _udp.write((uint8_t)1);
- 
+
   _udp.write((unsigned char*)&_ttl, 4);
 
   // Length of RData is 4 bytes (because, in this case, RData is IPv4)
@@ -162,4 +163,3 @@ void DNSServer::replyWithCustomCode()
   _udp.write(_buffer, sizeof(DNSHeader));
   _udp.endPacket();
 }
-

@@ -3,10 +3,6 @@
 #include <FS.h>                   //this needs to be first, or it all crashes and burns...
 #include <ArduinoJson.h>          //https://github.com/bblanchon/ArduinoJson
 
-#ifndef ESP_DEBUG
-#define ESP_DEBUG(...) Serial.printf( __VA_ARGS__ )
-#endif
-
 #include "custom_config.h"
 
 class ESPConfig
